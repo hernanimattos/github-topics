@@ -5,17 +5,19 @@ import { HTTP } from "./http-commom.js";
 Vue.use(Vuex);
 const state = {
   topics: Object,
-  error: null,
+  error: {
+	  status: 0;
+	  errro: String,
+  },
 };
 const actions = {
   fetchTopics: ({ commit }, payload) => {
     const param = payload.param ? `+${payload.param}` : "";
 	const page = payload.page ? payload.page : 1;
-	// const perPgae = (payload.per_page > 5) ? payload.per_page : 5;
 
 	const query = payload.term + param;
 
-	console.log(query)
+
 
       HTTP.get("/topics", {
         params: {
@@ -25,10 +27,11 @@ const actions = {
         }
       })
         .then(response => {
-          commit("getTopics", response.data);
+		  commit("getTopics", response.data);
+		  	console.log(response);
         })
         .catch(error => {
-          commit("error", error.response.status);
+          commit("error", {text: error.responsestatusText , status: error.response.status});
         });
 
   }
@@ -39,7 +42,7 @@ const mutations = {
   },
   error: (state, payload)=>{
 
-	  	state.error = payload;
+	  	state.error = { text: payload.text, status: payload.status };
 
   },
 };

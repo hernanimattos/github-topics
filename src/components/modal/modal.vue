@@ -18,12 +18,6 @@
 <script>
 export default {
   name:'modal',
-  data () {
-	  return {
-
-	  }
-  },
-
   props: {
 	  showData: {
 	  type: Boolean,

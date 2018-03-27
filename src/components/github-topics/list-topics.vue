@@ -12,7 +12,7 @@
 			</article>
 			<footer>
 				<div class="topic-footer-text">
-					<h5>Creator</h5>
+					<h5>Created by</h5>
 					<p v-text="(topicData.created_by) ? topicData.created_by: 'No have data'"></p>
 				</div>
 				<div class="topic-footer-text">

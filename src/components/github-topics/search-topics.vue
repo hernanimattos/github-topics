@@ -11,7 +11,7 @@
 			<button type="submit">Send</button>
 		</fieldset>
 	</form>
-		<span class="error " v-show="showError" :class="{active: showError}" > Unfortunatly we have problems. Try more later.</span>
+		<span class="error " v-show="showError" :class="{active: showError}" > {{error.text}}</span>
 </section>
 
 </template>
@@ -33,7 +33,10 @@ export default {
   },
   computed: {
 	  	 error(){
-		   this.showError =  (this.$store.state.error) ? true : false;
+			if(this.$store.state.error.status > 400){
+				this.showError = true
+				return this.$store.state.error;
+			}
 	  },
   },
 
