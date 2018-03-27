@@ -6,9 +6,10 @@ Vue.use(Vuex);
 const state = {
   topics: Object,
   error: {
-	  status: 0;
-	  errro: String,
+    status: 0,
+    errro: String
   },
+  notFound: false,
 };
 const actions = {
   fetchTopics: ({ commit }, payload) => {
@@ -16,8 +17,6 @@ const actions = {
 	const page = payload.page ? payload.page : 1;
 
 	const query = payload.term + param;
-
-
 
       HTTP.get("/topics", {
         params: {
@@ -27,18 +26,25 @@ const actions = {
         }
       })
         .then(response => {
+
 		  commit("getTopics", response.data);
-		  	console.log(response);
+
+
         })
         .catch(error => {
           commit("error", {text: error.responsestatusText , status: error.response.status});
         });
-
   }
 };
 const mutations = {
   getTopics: (state, payload) => {
-    state.topics = payload;
+
+	if (payload.total_count == 0){
+		state.notFound = true;
+	}else{
+		state.notFound = false;
+	}
+	state.topics = payload;
   },
   error: (state, payload)=>{
 
@@ -46,6 +52,7 @@ const mutations = {
 
   },
 };
+
 
 export default new Vuex.Store({
   state,

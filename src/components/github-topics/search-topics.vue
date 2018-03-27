@@ -11,7 +11,8 @@
 			<button type="submit">Send</button>
 		</fieldset>
 	</form>
-		<span class="error " v-show="showError" :class="{active: showError}" > {{error.text}}</span>
+		<span class="error " v-if=" error ? error.status : ''" :class="{active: showError}" > {{error.text}}</span>
+		<span class="error " v-if="notFound " :class="{active: notFound}">Search result 0</span>
 </section>
 
 </template>
@@ -37,7 +38,10 @@ export default {
 				this.showError = true
 				return this.$store.state.error;
 			}
-	  },
+	 	 },
+	  	notFound() {
+			return this.$store.state.notFound;
+		},
   },
 
   methods: {
