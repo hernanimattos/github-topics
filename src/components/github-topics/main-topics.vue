@@ -1,86 +1,82 @@
 <template>
 	<section>
 		<searchTopics></searchTopics>
-		<listTopics v-for="topic in getTopics.items" :key="topic.id" :topic-data="topic"></listTopics>
+		<listTopics v-for="topic in getTopics.items" :key="topic.id" :topic-data="topic" class=""></listTopics>
 		<div class="pagination" v-if="(getTopics.total_count> 0)">
-			<ul>
-				<li><a href="" @click.prevent="backPage()">prev</a></li>
-				<li><a href="" @click.prevent="nextPage()">next</a></li>
-			</ul>
+			<a href="" @click.prevent="nextPage()">More</a>
 		</div>
 	</section>
 </template>
 
 <script>
-import listTopics from './list-topics.vue';
-import searchTopics from './search-topics.vue';
+import listTopics from "./list-topics.vue";
+import searchTopics from "./search-topics.vue";
 
 export default {
-		components: {
-		listTopics,
-		searchTopics,
-	},
-  name:'main-topics',
-  data () {
-	  return {
-		  topics:{},
-
-	  }
+  components: {
+    listTopics,
+    searchTopics
   },
-    computed: {
-	  getTopics(){
-		  return this.$store.state.topics;
-	  },
-
+  name: "main-topics",
+  data() {
+    return {
+      topics: {}
+    };
   },
-    watch: {
-	  'getTopics': ()=>{
- 			return this.getTopics;
-	  },
-
+  computed: {
+    getTopics() {
+      return this.$store.state.topics;
+    }
   },
-
+  watch: {
+    getTopics: () => {
+      return this.getTopics;
+    }
+  },
   methods: {
-	  backPage(){
-		  const pageActive = parseInt(this.$route.query.page, 10) - 1;
+    nextPage() {
 
-		  if(parseInt(this.$route.query.page, 10) > 1){
-			  this.fetchTopics(pageActive);
-		  }
-	  },
-	  nextPage(){
-		   const pageActive  = parseInt(this.$route.query.page, 10)  + 1;
-		   this.fetchTopics(pageActive);
-	  },
-	  fetchTopics( pageActive = null){
-		  	  const query = {
-			  term: this.$route.query.term,
-			  param: this.$route.query.param,
-			  page : pageActive,
+      const pageActive = parseInt(this.$route.query.page, 10) + 1;
+      const perPage = parseInt(this.$route.query.per_page, 10) + 5;
+	  this.fetchTopics(pageActive, perPage);
 
-		  };
-		   this.$store.dispatch('fetchTopics', query);
-		   this.$router.push({query: Object.assign({}, this.$route.query, { term: this.$route.query.term, param: this.$route.query.param, page: pageActive }) })
-	  },
-	  resolveQueryString(){
+	},
 
-	  if(this.$route.query.page && this.$route.query.term){
-		  const query = {
-			  term: this.$route.query.term,
-			  param: this.$route.query.param,
-			  page: this.$route.query.page,
-		  }
-		   this.$store.dispatch('fetchTopics', query);
-	  	}
-	  },
+    fetchTopics(pageActive = null, perPage = null) {
+      const query = {
+        term: this.$route.query.term,
+        param: this.$route.query.param,
+        page: pageActive,
+        per_page: perPage
+      };
 
+      this.$store.dispatch("fetchTopics", query);
+
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, {
+          term: this.$route.query.term,
+          param: this.$route.query.param,
+          page: pageActive,
+          per_page: perPage
+        })
+      });
+    },
+    resolveQueryString() {
+      if (this.$route.query.page && this.$route.query.term) {
+        const query = {
+          term: this.$route.query.term,
+          param: this.$route.query.param,
+          page: this.$route.query.page,
+          per_page: this.$route.query.per_page
+        };
+        this.$store.dispatch("fetchTopics", query);
+      }
+    }
   },
 
-  mounted(){
-	    this.resolveQueryString();
-
-  },
-
+  mounted() {
+    this.resolveQueryString();
+  }
 };
 </script>
 <style >
@@ -113,37 +109,19 @@ export default {
 
 	transition: max-height 1s, min-height 1s;
 }
-.pagination ul {
-	font-size: 0;
 
-	list-style: none;
+.pagination a {
+	display: block;
 
-	-webkit-padding-start: 0;
-}
-.pagination ul li {
-	display: inline-block;
+	width: 20px;
 
-	width: 50%;
+	padding: 20px 0 20px 0;
+	margin: 0 auto;
 
-	font-size: 1rem;
-
-	box-sizing: border-box;
-}
-.pagination ul li a {
 	text-decoration: none;
 	text-transform: uppercase;
 
 	color: #53a4b0;
-}
-.pagination ul li:first-child {
-	padding-right: 1.25rem;
-
-	text-align: right;
-}
-.pagination ul li:last-of-type {
-	padding-left: 1.25rem;
-
-	text-align: left;
 }
 
 </style>

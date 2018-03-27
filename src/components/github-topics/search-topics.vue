@@ -36,10 +36,11 @@ export default {
 		   this.showError =  (this.$store.state.error) ? true : false;
 	  },
   },
+
   methods: {
 	  fetchSearch(){
 		this.$store.dispatch('fetchTopics', this.$data.search);
-		this.$router.push({query: Object.assign({}, this.$route.query, { term: this.$data.search.term, param:this.$data.search.param, page: 1 }) })
+		this.$router.push({query: Object.assign({}, this.$route.query, { term: this.$data.search.term, param:this.$data.search.param, page: 1 , per_page: 5}) })
 	  }
   },
 };

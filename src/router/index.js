@@ -10,7 +10,8 @@ const router = new Router({
     {
       path: "/",
       name: "mainTopics",
-      component: mainTopics
+      component: mainTopics,
+      redirect: "/topics"
     }
   ]
 });

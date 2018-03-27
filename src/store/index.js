@@ -10,22 +10,27 @@ const state = {
 const actions = {
   fetchTopics: ({ commit }, payload) => {
     const param = payload.param ? `+${payload.param}` : "";
-    const page = payload.page ? payload.page : 1;
+	const page = payload.page ? payload.page : 1;
+	// const perPgae = (payload.per_page > 5) ? payload.per_page : 5;
 
-    const query = payload.term + param;
+	const query = payload.term + param;
 
-    const r = new Promise(() => {
-      HTTP.get("/topics", { params: { q: query, page: page, per_page: 5 } })
+	console.log(query)
+
+      HTTP.get("/topics", {
+        params: {
+          q: query,
+          page: page,
+          per_page: (page * 5)
+        }
+      })
         .then(response => {
-
           commit("getTopics", response.data);
         })
         .catch(error => {
-			console.log(error.response);
-
           commit("error", error.response.status);
         });
-    });
+
   }
 };
 const mutations = {
@@ -33,7 +38,7 @@ const mutations = {
     state.topics = payload;
   },
   error: (state, payload)=>{
-	    console.log(payload, "error");
+
 	  	state.error = payload;
 
   },

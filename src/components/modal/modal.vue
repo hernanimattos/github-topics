@@ -1,14 +1,14 @@
 <template>
-<section class="wrapper-modal" :class="{ active: showData}" >
+<section class="wrapper-modal" :class="{ active: showData}" @click="close($event)">
 			<div class="container-modal" >
 				<div class="modal">
 					<header>
-						<span class="close" @click="close()">X</span>
+						<span class="close" @click="close($event)">X</span>
 					</header>
 					<article class="modal-content">
 						<h2 v-text="(topic.display_name) ? topic.display_name : 'No have data'"></h2>
 						<h4>Descripition</h4>
-					<p v-text="(topic.description) ? topic.description : 'No have data'">{{topic.description}}</p>
+					<p v-text="(topic.description) ? topic.description : 'No have data'"> {{topic.description}} </p>
 					</article>
 				</div>
 			</div>
@@ -37,11 +37,11 @@ export default {
   },
 
   methods: {
-	  close(){
-
-		  this.$emit('close', !this.showData)
+	  close(e){
+		  if(e.target.classList.contains('active') || e.target.classList.contains('close')){
+			this.$emit('close', !this.showData)
+		  }
 	  },
-
   },
 };
 
@@ -69,8 +69,10 @@ export default {
 }
 
 .modal {
-	position: relative;
-	top: 10rem;
+	position: fixed;
+	top: 50%;
+	right: 0;
+	left: 0;
 
 	width: 80%;
 	min-height: 200px;
@@ -78,7 +80,7 @@ export default {
 	margin: auto;
 
 	background-color: #ffffff;
-}d
+}
 .modal-content,
 .modal header {
 	padding-top: 0.5em;
@@ -91,7 +93,7 @@ export default {
 
 	color: #ffffff;
 
-	background-color: blueviolet;
+	background-color: #53a4b0;
 
 	border-bottom: 1px solid #cccccc;
 }

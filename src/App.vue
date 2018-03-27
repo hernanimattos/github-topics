@@ -1,7 +1,6 @@
 <template>
   <div id="app">
 	  <main-topics></main-topics>
-
   </div>
 </template>
 <script>
@@ -13,30 +12,24 @@ export default {
 		mainTopics,
 	},
   name: 'app',
-
 };
 </script>
 
 <style >
-html{
-
-box-sizing: border-box;
-
-
+html {
+	box-sizing: border-box;
 }
-body{
-	font-size: 1em;
-	font-family: 'Montserrat', sans-serif;
+body {
 	position: relative;
-	line-height: 1.25em;
-	padding-left: 1.25em;
+
 	padding-right: 1.25em;
-}
-h1{
+	padding-left: 1.25em;
+
+	font-size: 1em;
+	line-height: 1.25em;
+	font-family: 'Montserrat', sans-serif;
+
 	color: black !important;
 }
-
-
-
 
 </style>
