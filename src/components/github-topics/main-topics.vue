@@ -71,11 +71,24 @@ export default {
         };
         this.$store.dispatch("fetchTopics", query);
       }
-    }
+    },
+    infinity(){
+      this.$nextTick(()=>{
+        window.addEventListener('scroll', ()=>{
+            const windowScroll = window.scrollY;
+                const documentHeight = document.body.clientHeight;
+                const windowHeght = window.innerHeight;
+                if(windowScroll == documentHeight - windowHeght ){
+                  this.nextPage();
+                }
+        })
+      });
+    },
   },
 
   mounted() {
     this.resolveQueryString();
+    this.infinity();
   }
 };
 </script>
