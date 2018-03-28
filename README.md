@@ -5,6 +5,11 @@
 ## Build Setup
 
 ``` bash
+# start
+
+Clone this repo
+cd git-topics
+
 # install dependencies
 npm install
 
