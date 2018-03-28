@@ -26,20 +26,20 @@ const actions = {
         }
       })
         .then(response => {
+			console.log(response)
 
 		  commit("getTopics", response.data);
 
-
         })
         .catch(error => {
-          commit("error", {text: error.responsestatusText , status: error.response.status});
+          commit("error", {text: error.response.data.message , status: error.response.status});
         });
   }
 };
 const mutations = {
   getTopics: (state, payload) => {
 
-	if (payload.total_count == 0){
+	if (payload.total_count == 0 || payload.items.length == 0){
 		state.notFound = true;
 	}else{
 		state.notFound = false;
