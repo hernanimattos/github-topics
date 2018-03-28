@@ -7,7 +7,7 @@
 ``` bash
 # start
 
-[Clone this repo:](https://github.com/hernanimattos/github-topics.git)
+[Clone this repo](https://github.com/hernanimattos/github-topics.git)
 cd git-topics
 
 # install dependencies
