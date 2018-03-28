@@ -1,5 +1,6 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: './src/main.js',
@@ -14,13 +15,17 @@ module.exports = {
         test: /\.css$/,
         use: [
           'vue-style-loader',
-          'css-loader'
+          'css-loader',
+          'autoprefixer-loader'
         ],
       },      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           loaders: {
+
+              postcss: [require('postcss-cssnext')()]
+
           }
           // other vue-loader options go here
         }

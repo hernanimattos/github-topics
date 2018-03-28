@@ -83,6 +83,8 @@ form select {
 	border-radius: 0;
 
 	-webkit-appearance: none;
+ -moz-appearance: none;
+
 }
 form button {
 	padding-top: 1.25rem;
